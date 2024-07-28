@@ -7,9 +7,8 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import ErrorMessage from "./error";
 
 const Comments: React.FC<{ post: Post }> = ({ post }) => {
   const [loadingComments, setLoadingComments] = useState<
@@ -37,16 +36,7 @@ const Comments: React.FC<{ post: Post }> = ({ post }) => {
   };
 
   if (error) {
-    return (
-      <Alert
-        variant="destructive"
-        className="dark:bg-red-800 dark:text-red-200"
-      >
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>{error}</AlertDescription>
-      </Alert>
-    );
+    return <ErrorMessage message={error} />;
   }
   return (
     <div>

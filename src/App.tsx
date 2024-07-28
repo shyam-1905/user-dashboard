@@ -8,6 +8,8 @@ import Todos from "./pages/[userId]/todos";
 import Photos from "./pages/[userId]/photos";
 import { ThemeProvider } from "./context/themeContext";
 import NotFound from "./pages/notFound";
+import { UserProvider } from "./context/userContext";
+import WithUserValidation from "./components/withValidUser";
 
 const router = createBrowserRouter([
   {
@@ -23,15 +25,27 @@ const router = createBrowserRouter([
       },
       {
         path: "users/:userId/posts",
-        element: <Posts />,
+        element: (
+          <WithUserValidation>
+            <Posts />
+          </WithUserValidation>
+        ),
       },
       {
         path: "users/:userId/todos",
-        element: <Todos />,
+        element: (
+          <WithUserValidation>
+            <Todos />
+          </WithUserValidation>
+        ),
       },
       {
         path: "users/:userId/photos",
-        element: <Photos />,
+        element: (
+          <WithUserValidation>
+            <Photos />
+          </WithUserValidation>
+        ),
       },
       {
         path: "*",
@@ -44,7 +58,9 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <RouterProvider router={router} />
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
     </ThemeProvider>
   );
 };

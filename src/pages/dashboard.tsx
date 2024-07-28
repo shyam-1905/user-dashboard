@@ -4,7 +4,8 @@ import { User } from "@/types/types";
 import { getUser } from "@/api/api";
 import UserProfile from "@/components/userProfile";
 import UserActivities from "@/components/userActivities";
-import { Skeleton } from "@/components/ui/skeleton";
+import Loader from "@/components/loader";
+import NoUserFound from "@/components/noUserFound";
 
 const Dashboard: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();
@@ -32,17 +33,11 @@ const Dashboard: React.FC = () => {
   }, [userId]);
 
   if (isLoading) {
-    return (
-      <div className="space-y-6">
-        {[...Array(5)].map((_, index) => (
-          <Skeleton key={index} className="w-full h-40" />
-        ))}
-      </div>
-    );
+    return <Loader message={"Loading..."} size={"lg"} />;
   }
 
   if (!user) {
-    return <div className="text-center text-lg">User not found.</div>;
+    return <NoUserFound />;
   }
 
   if (error) {

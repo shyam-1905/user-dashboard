@@ -2,17 +2,15 @@ import React, { useState, useEffect } from "react";
 import { getUserPosts } from "@/api/api";
 import { Post } from "@/types/types";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useParams } from "react-router-dom";
 import Comments from "@/components/comments";
+import ErrorMessage from "@/components/error";
+import Loader from "@/components/loader";
 
 const Posts: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
-
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -39,23 +37,11 @@ const Posts: React.FC = () => {
   }, []);
 
   if (loadingPosts) {
-    return (
-      <div className="space-y-6">
-        {[...Array(5)].map((_, index) => (
-          <Skeleton key={index} className="w-full h-40" />
-        ))}
-      </div>
-    );
+    return <Loader message={"Loading Posts ....."} size="lg" />;
   }
 
   if (error) {
-    return (
-      <Alert variant="destructive">
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>{error}</AlertDescription>
-      </Alert>
-    );
+    return <ErrorMessage message={error} />;
   }
 
   return (

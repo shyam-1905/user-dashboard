@@ -6,8 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { AlertCircle, Image as ImageIcon, Menu } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Image as ImageIcon, Menu } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -16,6 +15,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import ErrorMessage from "@/components/error";
+import Loader from "@/components/loader";
 
 const Photos = () => {
   const { userId } = useParams<{ userId: string }>();
@@ -68,21 +69,11 @@ const Photos = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Skeleton className="w-[300px] h-[20px] rounded-full" />
-      </div>
-    );
+    return <Loader message={"Loading Photos...."} size={"lg"} />;
   }
 
   if (error) {
-    return (
-      <Alert variant="destructive" className="max-w-md mx-auto mt-8">
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>{error}</AlertDescription>
-      </Alert>
-    );
+    return <ErrorMessage message={error} />;
   }
 
   const AlbumList = () => (

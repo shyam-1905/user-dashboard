@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Todo } from "@/types/types";
 import { getUserTodos } from "@/api/api";
-import { Check, X, Loader2 } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import Loader from "@/components/loader";
+import ErrorMessage from "@/components/error";
 
 const Todos = () => {
   const { userId } = useParams<{ userId: string }>();
@@ -34,20 +35,11 @@ const Todos = () => {
   }, [userId]);
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
+    return <Loader message={"Loading..."} size={"lg"} />;
   }
 
   if (error) {
-    return (
-      <Alert variant="destructive" className="max-w-md mx-auto mt-8">
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>{error}</AlertDescription>
-      </Alert>
-    );
+    return <ErrorMessage message={error} />;
   }
 
   return (
