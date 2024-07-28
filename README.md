@@ -33,7 +33,7 @@ This project is a User Dashboard Application built with React, TypeScript, Tailw
 1. **Clone the repository:**
 
    ```sh
-   git clone https://github.com/your-username/user-dashboard-app.git
+   git clone https://github.com/shyam-1905/user-dashboard.git
    cd user-dashboard-app
    ```
 
